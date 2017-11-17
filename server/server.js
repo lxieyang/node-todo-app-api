@@ -9,6 +9,9 @@ var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
+// middleware
+var {authenticate} = require('./middleware/authenticate');
+
 var app = express();
 const port = process.env.PORT;  // on heroku use the former, localhost use the latter
 
@@ -110,9 +113,6 @@ app.post('/users', (req, res) => {
   var body = _.pick(req.body, ['email', 'password']);
   var user = new User(body);
 
-  // User.findByToken
-  // User.generateAuthToken
-
   user.save().then(() => {
     return user.generateAuthToken();  // return a promise, which is a token
   }).then((token) => {
@@ -122,6 +122,9 @@ app.post('/users', (req, res) => {
   });
 });
 
+app.get('/users/me', authenticate, (req, res) => {  // authentication is a middleware
+  res.send(req.user);
+});
 
 app.listen(port, () => {
   console.log(`Started on port ${port}`);
