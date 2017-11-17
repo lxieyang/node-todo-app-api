@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "mocha server/**/*.test.js",
+    "test": "export NODE_ENV=test || SET \"NODE_NVE=test\" && mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
   "engines": {
@@ -13,9 +13,6 @@
   },
   "author": "",
   "license": "ISC",
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",

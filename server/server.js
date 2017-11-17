@@ -1,3 +1,5 @@
+require('./config/config');
+
 const _ = require('lodash');
 const {ObjectID} = require('mongodb');
 const express = require('express');
@@ -8,7 +10,7 @@ var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
 var app = express();
-const port = process.env.PORT || 3000;  // on heroku use the former, localhost use the latter
+const port = process.env.PORT;  // on heroku use the former, localhost use the latter
 
 app.use(bodyParser.json());
 
