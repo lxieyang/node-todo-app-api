@@ -49,7 +49,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {   // override toJSON method
   var user = this;
   var userObject = user.toObject();
-
+  
   return _.pick(userObject, ['email', '_id']);
 };
 
