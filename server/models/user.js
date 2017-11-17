@@ -6,7 +6,7 @@ const _ = require('lodash');
 /*
 {
   email: 'xieyangl@123.com',
-  password: 'asdkjfhkjahdfkjahsf',   // not in plain text
+  password: 'asdkjfhkjahdfkjahsf',   // not stored in plain text
   tokens: [{
       access: 'auth',
       token: 'jsadfjlkajfdlkjalskjfdklajdflkjadlsdjf',  // send along the http request   
@@ -49,7 +49,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {   // override toJSON method
   var user = this;
   var userObject = user.toObject();
-  
+
   return _.pick(userObject, ['email', '_id']);
 };
 
