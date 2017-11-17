@@ -4,6 +4,7 @@ const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server');
 const {Todo} = require('./../models/todo');
+const {User} = require('./../models/user');
 const {todosList, populateTodos, usersList, populateUsers} = require('./seed/seed');
 
 beforeEach(populateUsers);
@@ -169,8 +170,82 @@ describe('PATCH /todos/:id', () => {
       .expect((res) => {
         expect(res.body.todo.text).toBe(text);
         expect(res.body.todo.completed).toBe(false);
-        expect(res.body.todo.completedAt).toBe(null);
+        expect(res.body.todo.completedAt).toEqual(null);
       })
+      .end(done);
+  });
+});
+
+describe('GET /users/me', () => {
+  it('should return user if authenticated', (done) => {
+    request(app)
+      .get('/users/me')
+      .set('x-auth', usersList[0].tokens[0].token)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body._id).toBe(usersList[0]._id.toHexString());
+        expect(res.body.email).toBe(usersList[0].email);
+      })
+      .end(done);
+  });
+
+  it('should return 401 if not authenticated', (done) => {
+    request(app)
+      .get('/users/me') // don't set the header
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toEqual({});   // expect empty body
+      })
+      .end(done);
+  });
+});
+
+describe('POST /users', () => {
+  it('should create a user', (done) => {
+    var email = 'example@e.com';
+    var password = '123dfd';
+
+    request(app)
+      .post('/users')
+      .send({email, password})
+      .expect(200)
+      .expect((res) => {
+        expect(res.headers['x-auth']).not.toEqual(null);
+        expect(res.body._id).not.toEqual(null);
+        expect(res.body.email).toBe(email);
+      })
+      .end((err) => {
+        if (err) {
+          return done(err);
+        }
+
+        User.findOne({email}).then((user) => {
+          expect(user).not.toEqual(null);
+          expect(user.password).not.toBe(password);
+          done();
+        });
+      });
+  });
+
+  it('should return validation errors if request invalid', (done) => {
+    request(app)
+    .post('/users')
+    .send({
+      email: 'and', 
+      password: '11'
+    })
+    .expect(400)
+    .end(done);
+  });
+
+  it('should not create user if email in use', (done) => {
+    request(app)
+      .post('/users')
+      .send({
+        email: usersList[0].email,
+        password: '3231351455df5a6f65a4d6f54a6sdf'
+      })
+      .expect(400)
       .end(done);
   });
 });
