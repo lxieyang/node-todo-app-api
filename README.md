@@ -14,10 +14,26 @@
 
 1. Install **Heroku** CLI
 2. Use **Git** to track the project
-3. Run `heroku create`
-4. Run `heroku addons:create mongolab` to add mLab support for MongoDB
-5. Set `JWT_SECRET` enviroment variable on Heroku: `heroku config:set JWT_SECRET=jkahsdflku5f3a4df13ds4f3a41dfa53df`
-6. Run `git push heroku master`
+3. Update `package.json` with 
+
+    a Node.js engine **version**
+    ```json
+    "engines": {
+      "node": "8.9.1"
+    },
+    ```
+    and a **start** script:
+
+    ```json
+    "scripts": {
+      "start": "node server/server.js",
+      "test": "xxxxxxxxxxx" 
+    },
+    ``` 
+4. Run `heroku create`
+5. Run `heroku addons:create mongolab` to add mLab support for MongoDB
+6. Set `JWT_SECRET` enviroment variable on Heroku: `heroku config:set JWT_SECRET=jkahsdflku5f3a4df13ds4f3a41dfa53df`
+7. Run `git push heroku master`
 
 Follow detailed instructions here: [Deploying with Git](https://devcenter.heroku.com/articles/git)
 
