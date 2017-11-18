@@ -70,6 +70,16 @@ UserSchema.methods.generateAuthToken = function () {
   });
 };
 
+UserSchema.methods.removeToken = function (token) {
+  var user = this;
+
+  return user.update({
+    $pull: {  // remove entire object with matching tokens
+      tokens: {token}
+    }
+  });
+};
+
 
 
 /*
