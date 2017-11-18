@@ -1,0 +1,15 @@
+{
+  "test": {
+    "PORT": 3000,
+    "MONGODB_URI": "mongodb://localhost:27017/TodoAppTest",
+    "JWT_SECRET": "ajksdhfkj53a4df513adsf5ads"  // just random
+  },
+  "development": {
+    "PORT": 3000,
+    "MONGODB_URI": "mongodb://localhost:27017/TodoApp",
+    "JWT_SECRET": "5345FAD4F51A53DF15A1FD351ADS35F"   // just random
+  }
+}
+
+// should ignore in .gitignore, but keep for demo purposes
+// will parse first by jsmin to remove comments
