@@ -1,5 +1,7 @@
 # Node TODO App API
 
+***Recently refactored to use **async-await** paradigm in ES7.***
+
 ## To run locally
 
 1. Install **MongoDB** on your machine
@@ -9,6 +11,17 @@
 5. Create data folder for MongoDB by running `mkdir ~/mongo-data`
 6. Start mongo server by running `mongod -dbpath ~/mongo-data`
 7. Run the app by `npm start` or `node server/server.js`
+
+## Testing
+
+This project consists of some simple test cases. To run them:
+
+  `npm test`
+  
+  or
+
+  `npm run test-watch` (in `nodemon` mode)
+
 
 ## Deploying to Heroku
 
